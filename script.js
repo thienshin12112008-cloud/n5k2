@@ -57,7 +57,7 @@ document.querySelectorAll('.feature-card, .course-card').forEach(card => {
 // Notification System
 function updateNotificationCount() {
     // Count total notifications (hardcoded based on actual notifications)
-    const totalNotifications = 3; // Update this number when adding new notifications
+    const totalNotifications = 4; // Update this number when adding new notifications
     const readNotifications = JSON.parse(localStorage.getItem('readNotifications') || '[]');
     const unreadCount = totalNotifications - readNotifications.length;
     
