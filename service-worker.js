@@ -1,4 +1,4 @@
-const CACHE_NAME = 'n5k2-v1';
+const CACHE_NAME = 'n5k2-v2';
 // Thay 'n5k2-japanese' bằng tên repository của bạn
 const BASE_PATH = '/n5k2-japanese';
 const urlsToCache = [
@@ -15,6 +15,9 @@ const urlsToCache = [
 
 // Install service worker
 self.addEventListener('install', event => {
+  // Skip waiting to activate immediately
+  self.skipWaiting();
+  
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -51,6 +54,16 @@ self.addEventListener('activate', event => {
           }
         })
       );
+    }).then(() => {
+      // Take control of all pages immediately
+      return self.clients.claim();
     })
   );
+});
+
+// Listen for skip waiting message
+self.addEventListener('message', event => {
+  if (event.data && event.data.action === 'skipWaiting') {
+    self.skipWaiting();
+  }
 });
